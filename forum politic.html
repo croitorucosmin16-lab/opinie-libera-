@@ -1,1 +1,413 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Forum Politic — Valea Jiului</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://images.unsplash.com/photo-1589758094783-6a235e92068d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            border: 2px solid #2c3e50;
+        }
+        header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2::before {
+            content: "🏛️";
+            font-size: 1.3em;
+        }
+
+        /* Cadre pentru subiecte */
+        .topic-card {
+            margin: 25px 0;
+            padding: 20px;
+            background: #fff;
+            border-left: 6px solid #3498db;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        .topic-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .topic-title {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .topic-title::before {
+            content: "⚖️";
+            font-size: 1.2em;
+            color: #e74c3c;
+        }
+
+        /* Posturi */
+        .post {
+            padding: 15px;
+            margin: 15px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 8px;
+            position: relative;
+            transition: background 0.2s;
+        }
+        .post:hover {
+            background: #eaf2f8;
+        }
+        .post-author {
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .post-date {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .like-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+            transition: background 0.2s;
+        }
+        .like-btn:hover {
+            background: #c0392b;
+        }
+        .like-count {
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        /* Formular */
+        .form-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(236, 240, 241, 0.8);
+            border-radius: 10px;
+            border: 1px solid #bdc3c7;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border 0.2s;
+        }
+        input:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            padding: 12px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+
+        /* Reguli */
+        .rules {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .rules strong {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Secțiune Valea Jiului */
+        .valley-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #fff;
+            border-left: 6px solid #e74c3c;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+        .valley-title {
+            font-size: 1.5em;
+            color: #e74c3c;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .valley-title::before {
+            content: "⛏️";
+            font-size: 1.3em;
+        }
+        .valley-content {
+            line-height: 1.7;
+        }
+        .valley-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .action-call {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Responsiv */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            h1 { font-size: 1.8em; }
+            .topic-title { font-size: 1.2em; }
+            .post {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/2963/2963875.png" alt="Logo">
+            </div>
+            <h1>🏛️ Forum Politic — Valea Jiului</h1>
+            <p>Discută, propune, schimbă — vocea ta contează. În baza legii și respectului.</p>
+        </header>
+
+        <!-- Subiect 1: Educație -->
+        <div class="topic-card" id="topic-edu">
+            <h2>Educația în România</h2>
+            <div class="posts-list" id="edu-posts">
+                <div class="post">
+                    <div class="post-author">Ana Popescu <button class="like-btn" onclick="likePost(this)">👍 <span class="like-count">0</span></button></div>
+                    Trebuie să investim în profesori, nu doar în clădiri. Un profesor motivat = elevi inspirați.
+                    <div class="post-date">Postat azi, 14:30</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subiect 2: Justiție -->
+        <div class="topic-card" id="topic-just">
+            <h2>Justiția Independentă</h2>
+            <div class="posts-list" id="just-posts">
+                <div class="post">
+                    <div class="post-author">Mihai Ionescu <button class="like-btn" onclick="likePost(this)">👍 <span class="like-count">0</span></button></div>
+                    Nu putem avea democrație dacă judecătorii sunt controlați de politicieni. Independența e esențială.
+                    <div class="post-date">Postat ieri, 09:15</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subiect 3: Economie -->
+        <div class="topic-card" id="topic-econ">
+            <h2>Economia și Impozitele</h2>
+            <div class="posts-list" id="econ-posts">
+                <div class="post">
+                    <div class="post-author">Elena Georgescu <button class="like-btn" onclick="likePost(this)">👍 <span class="like-count">0</span></button></div>
+                    Impozitele ar trebui reduse pentru micii antreprenori. Sunt motorul economiei reale.
+                    <div class="post-date">Postat 2 zile în urmă, 18:45</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOU: Secțiune Valea Jiului -->
+        <div class="valley-section">
+            <h2 class="valley-title">⛏️ Valea Jiului — Din „Gaura Neagră” în Centru de Dezvoltare</h2>
+            <div class="valley-content">
+                <p><strong>Actualitate 2025:</strong> Valea Jiului rămâne una dintre cele mai afectate zone din România — dar și una cu potențial uriaș. Minierii au fost lăsați pe dinafară, iar orașele se golesc. Ce putem face?</p>
+
+                <img src="https://images.unsplash.com/photo-1589758094783-6a235e92068d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Valea Jiului" class="valley-image">
+
+                <h3>📌 Ce se întâmplă acum:</h3>
+                <ul>
+                    <li>Proiectul de modernizare a drumurilor naționale este în întârziere</li>
+                    <li>Fonduri europene nerulate pentru reconversie economică</li>
+                    <li>Învățământul profesional este subfinanțat</li>
+                    <li>Tinerii pleacă — nu mai există locuri de muncă adecvate</li>
+                </ul>
+
+                <h3>💡 Ce putem face NOI:</h3>
+                <ul>
+                    <li>Creăm grupuri locale de inițiativă — pentru proiecte de turism, agricultură, educație tehnică</li>
+                    <li>Cerem transparență — unde sunt fondurile europene?</li>
+                    <li>Propunem reforme: taxe reduse pentru antreprenori locali, sprijin pentru tineri care rămân</li>
+                    <li>Construim un plan de dezvoltare locală — cu participarea cetățenilor</li>
+                </ul>
+
+                <div class="action-call">
+                    🔥 <strong>Acțiune imediată:</strong> Scrie o opinie în secțiunea „Economie” sau „Justiție” — și propune o soluție concretă pentru Valea Jiului!
+                </div>
+            </div>
+        </div>
+
+        <!-- Formular pentru adăugare opinie -->
+        <div class="form-container">
+            <h3>Adaugă o opinie</h3>
+            <input type="text" id="name" placeholder="Numele tău" required>
+            <div class="topic-selector">
+                <label for="topic">Alege subiectul:</label>
+                <select id="topic">
+                    <option value="edu">Educația în România</option>
+                    <option value="just">Justiția Independentă</option>
+                    <option value="econ">Economia și Impozitele</option>
+                </select>
+            </div>
+            <textarea id="opinion" placeholder="Scrie opinia ta... (min. 50 de caractere)" rows="5" required></textarea>
+            <button onclick="addOpinion()">Postează</button>
+        </div>
+
+        <div class="rules">
+            <strong>Reguli de participare:</strong><br>
+            • Respectă toți participanții — chiar dacă nu ești de acord<br>
+            • Nu folosi limbaj vulgar, amenințări sau mesaje de ură<br>
+            • Nu postează linkuri externe fără motiv valid<br>
+            • Opiniile sunt moderate după publicare (dacă e nevoie)<br>
+            • Fii concis și constructiv — discuția e mai importantă decât „câștigarea” ei.<br>
+            • Toate opiniile sunt exprimate în cadrul legal — nu încălci legile României.
+        </div>
+    </div>
+
+    <script>
+        function addOpinion() {
+            const name = document.getElementById('name').value.trim();
+            const topic = document.getElementById('topic').value;
+            const opinion = document.getElementById('opinion').value.trim();
+
+            if (name === '' || opinion === '') {
+                alert("Te rugăm completează toate câmpurile.");
+                return;
+            }
+
+            if (opinion.length < 50) {
+                alert("Opinia trebuie să aibă cel puțin 50 de caractere.");
+                return;
+            }
+
+            // Creează postul
+            const post = document.createElement('div');
+            post.className = 'post';
+            const now = new Date();
+            const dateStr = now.toLocaleString('ro-RO');
+
+            post.innerHTML = `
+                <div class="post-author">${escapeHtml(name)} <button class="like-btn" onclick="likePost(this)">👍 <span class="like-count">0</span></button></div>
+                ${escapeHtml(opinion)}
+                <div class="post-date">Postat ${dateStr}</div>
+            `;
+
+            // Adaugă postul în secțiunea corespunzătoare
+            const targetContainer = document.getElementById(`${topic}-posts`);
+            targetContainer.prepend(post);
+
+            // Resetează formularul
+            document.getElementById('name').value = '';
+            document.getElementById('opinion').value = '';
+
+            alert("Mulțumim pentru contribuția ta! Opinia ta a fost adăugată.");
+        }
+
+        function likePost(button) {
+            const countSpan = button.querySelector('.like-count');
+            let currentLikes = parseInt(countSpan.textContent);
+            currentLikes++;
+            countSpan.textContent = currentLikes;
+            button.style.background = '#c0392b';
+            button.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
 
